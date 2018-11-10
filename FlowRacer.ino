@@ -99,11 +99,11 @@ Color getFaceColorBasedOnCarPosition(byte face, long pos, byte from, byte to) {
     byte faceRotated = (6 + face - from) % 6; 
     switch( faceRotated ) { //... rotate to the correct direction
       case 0: center = 0;  break;
-      case 1: center = 250; break;
-      case 2: center = 750; break;
+      case 1: center = 330; break;
+      case 2: center = 670; break;
       case 3: center = 1000;  break;
-      case 4: center = 750; break;
-      case 5: center = 250; break;
+      case 4: center = 670; break;
+      case 5: center = 330; break;
     }
 
     // we are traveling straight
@@ -141,7 +141,8 @@ Color getFaceColorBasedOnCarPosition(byte face, long pos, byte from, byte to) {
       case 5: center = 500;  break;
     }
 
-    if( pos < -CAR_FADE_IN_DIST + center || pos > carFadeOutDistance + center ) {
+    // inner side shouldn't light up on the turn
+    if( faceRotated == 5 || pos < -CAR_FADE_IN_DIST + center || pos > carFadeOutDistance + center ) {
       // out of range for us...
       brightness = 0;
     }
@@ -173,8 +174,9 @@ Color getFaceColorBasedOnCarPosition(byte face, long pos, byte from, byte to) {
       case 4: center = 500;  break;
       case 5: center = 250; break;
     }
-
-    if( pos < -CAR_FADE_IN_DIST + center || pos > carFadeOutDistance + center ) {
+    
+    // inner side shouldn't light up on the turn
+    if( faceRotated == 1 || pos < -CAR_FADE_IN_DIST + center || pos > carFadeOutDistance + center ) {
       // out of range for us...
       brightness = 0;
     }
